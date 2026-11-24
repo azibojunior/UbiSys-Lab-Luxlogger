@@ -8,12 +8,30 @@
       <itemPath>PIC24FStarter.h</itemPath>
       <itemPath>TouchSense.h</itemPath>
       <itemPath>RGBLeds.h</itemPath>
+      <itemPath>LuxLogger.h</itemPath>
+      <itemPath>Storage.h</itemPath>
+      <itemPath>Clock.h</itemPath>
+      <itemPath>Sensor.h</itemPath>
+      <itemPath>UI.h</itemPath>
+      <itemPath>TextDisplay.h</itemPath>
+      <itemPath>Font5x7.h</itemPath>
+      <itemPath>config/usb_config.h</itemPath>
+      <itemPath>config/fileio_config.h</itemPath>
+      <itemPath>config/system.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
                    projectFiles="true">
       <itemPath>Makefile</itemPath>
       <itemPath>pic24fStarter.mc3</itemPath>
+    </logicalFolder>
+    <logicalFolder name="Library"
+                   displayName="Library (Microchip MLA, unchanged)"
+                   projectFiles="true">
+      <itemPath>lib/mla_usb/src/usb_host.c</itemPath>
+      <itemPath>lib/mla_usb/src/usb_host_msd.c</itemPath>
+      <itemPath>lib/mla_usb/src/usb_host_msd_scsi.c</itemPath>
+      <itemPath>lib/mla_fileio/src/fileio.c</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -26,6 +44,13 @@
       <itemPath>main.c</itemPath>
       <itemPath>TouchSense.c</itemPath>
       <itemPath>RGBLeds.c</itemPath>
+      <itemPath>Storage.c</itemPath>
+      <itemPath>Clock.c</itemPath>
+      <itemPath>Sensor.c</itemPath>
+      <itemPath>UI.c</itemPath>
+      <itemPath>TextDisplay.c</itemPath>
+      <itemPath>Font5x7.c</itemPath>
+      <itemPath>config/usb_config.c</itemPath>
     </logicalFolder>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
@@ -37,12 +62,12 @@
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
         <platformTool>SKDEPIC24F1PlatformTool</platformTool>
-        <languageToolchain>XC16</languageToolchain>
-        <languageToolchainVersion>2.10</languageToolchainVersion>
+        <languageToolchain>XCDSC</languageToolchain>
+        <languageToolchainVersion>3.31.01</languageToolchainVersion>
         <platform>4</platform>
       </toolsSet>
       <packs>
-        <pack name="PIC24F-GA-GB_DFP" vendor="Microchip" version="1.10.375"/>
+        <pack name="PIC24F-GA-GB_DFP" vendor="Microchip" version="1.11.479"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>
@@ -88,7 +113,8 @@
         <property key="enable-symbols" value="true"/>
         <property key="enable-unroll-loops" value="false"/>
         <property key="expand-pragma-config" value="false"/>
-        <property key="extra-include-directories" value=""/>
+        <property key="extra-include-directories"
+                  value="config;lib/mla_usb/inc;lib/mla_fileio/inc"/>
         <property key="isolate-each-function" value="false"/>
         <property key="keep-inline" value="false"/>
         <property key="oXC16gcc-align-arr" value="false"/>
@@ -161,7 +187,7 @@
         <property key="general-code-protect" value="no_code_protect"/>
         <property key="general-write-protect" value="no_write_protect"/>
         <property key="generate-cross-reference-file" value="false"/>
-        <property key="heap-size" value=""/>
+        <property key="heap-size" value="2048"/>
         <property key="input-libraries" value=""/>
         <property key="linker-stack" value="true"/>
         <property key="linker-symbols" value=""/>

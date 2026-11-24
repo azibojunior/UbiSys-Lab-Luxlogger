@@ -142,3 +142,14 @@ build/default/debug/TouchSense.o
 build/default/debug/SH1101A.o
 build/default/debug/RGBLeds.o
 build/default/debug/main.o
+
+# --- Added on branch saving_to_USB (part B) ---------------------------------
+# Build output and machine-specific MPLAB X files. They change on every build
+# and on every computer, which causes noise and merge conflicts in a team.
+build/
+dist/
+debug/
+.generated_files/
+nbproject/private/
+nbproject/Makefile-local-*.mk
+nbproject/Makefile-genesis.properties
