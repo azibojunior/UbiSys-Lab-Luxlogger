@@ -1,0 +1,14 @@
+# MPLAB X: build output and files that MPLAB X generates or that differ per computer
+build/
+dist/
+debug/
+.generated_files/
+nbproject/private/
+nbproject/Makefile-*
+nbproject/Package-*.bash
+# programs built by the PC tests in test/
+test/host_test
+test/host_test.exe
+test/test_daydata
+test/test_daydata.exe
+test/stubstorage.o
