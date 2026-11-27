@@ -6,13 +6,13 @@ Owner: Azibo Junior Balgah · Branch: `display_data_by_day` · Folder: `display_
 
 **This folder is a complete MPLAB X project of its own.** It builds and runs on the board without the other parts and without any other branch, so this work stays safe and can be shown on its own even if combining the parts causes problems. It uses exactly the team's function and type names, so the user interface can later be copied into the team project unchanged.
 
-Status: description and plan; the code follows step by step (see `docs/PLAN.md`).
+Status: the folder is its own MPLAB project and runs on the board; the screens follow step by step.
 
 ## Features
 
 | Feature | Description | Status |
 |---|---|---|
-| **Own MPLAB project** | This folder builds and runs on the starter kit by itself, without the other parts or branches | planned |
+| **Own MPLAB project** | This folder builds and runs on the starter kit by itself, without the other parts or branches | done |
 | **Stand-ins with the team's interfaces** | Clock, sensor and USB stick are replaced by stand-ins that have exactly the team's function names | planned |
 | **Live screen** | Current light value (lux), date, time and USB stick state, refreshed once per second | planned |
 | **Touch counting** | A pad counts only after it was touched for 3 passes in a row; holding it counts once, a short glitch not at all | planned |
