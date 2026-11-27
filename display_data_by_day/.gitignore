@@ -6,9 +6,6 @@ debug/
 nbproject/private/
 nbproject/Makefile-*
 nbproject/Package-*.bash
-# programs built by the PC tests in test/
-test/host_test
-test/host_test.exe
+# program built by the PC unit test in test/
 test/test_daydata
 test/test_daydata.exe
-test/stubstorage.o

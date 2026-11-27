@@ -15,13 +15,13 @@ Status: description and plan; the code follows step by step (see `docs/PLAN.md`)
 | **Own MPLAB project** | This folder builds and runs on the starter kit by itself, without the other parts or branches | planned |
 | **Stand-ins with the team's interfaces** | Clock, sensor and USB stick are replaced by stand-ins that have exactly the team's function names | planned |
 | **Live screen** | Current light value (lux), date, time and USB stick state, refreshed once per second | planned |
-| **Touch filter** | Ignores short glitches; one action per touch even when the pad is held; one pad at a time | planned |
-| **No flicker** | A text row is only redrawn when its content changed | planned |
+| **Touch counting** | A pad counts only after it was touched for 3 passes in a row; holding it counts once, a short glitch not at all | planned |
+| **Redraw only when needed** | The screen is drawn again only when something changes (the live screen once per second) | planned |
 | **Day list** | All days on the USB stick, newest first, 5 per page, `>` cursor and position counter (`2/3`) | planned |
 | **Day graph** | 24 bars = average lux of each hour of the selected day; header with date and maximum; hour labels 0/6/12/18 | planned |
 | **Browse days in the graph** | Left/right jumps to the older/newer day without going back to the list | planned |
 | **Missing data** | Hours without measurements are drawn as a dot, not as a zero bar | planned |
-| **Display timeout** | OLED off after 30 s without touch; the first touch only wakes it up | planned |
+| **Display timeout** | The screen goes dark after 30 s without touch; the first touch only wakes it up | planned |
 | **Status LED** | Green = stick ready, red = stick error, off = no stick or display asleep | planned |
 | **Set date and time** | Year, month, day, hour, minute with the pads; day limited to the month length, leap years | planned |
 | **Loading message** | "Loading day ..." while a day is read from the stick | planned |
@@ -91,7 +91,7 @@ minutes[1440]   one value per minute, LUX_NONE = no measurement
 hourly[24]      LUX_NONE if a whole hour has no measurement
       │  DayData_BarHeight()  linear: largest hour of the day = 46 px
       ▼
-UIDraw_Bar()    writes whole display bytes (8 pixels at once) → 24 bars of 4 px
+UIDraw_Bar()    draws each bar pixel by pixel with PutPixel() → 24 bars of 4 px
 ```
 
 The OLED has 128 × 64 pixels, so 1440 minute values cannot be shown one by one; 24 bars of 4 px with 1 px gaps fill 120 px and stay readable.
@@ -100,9 +100,9 @@ The OLED has 128 × 64 pixels, so 1440 minute values cannot be shown one by one;
 
 * **Independent, but compatible.** Own project and stand-ins, but the team's names (`Storage_ListDays()`, `Clock_Now()`, `Date`, `LUX_NONE` …), so nothing in `UI.c` changes when it moves into the team project.
 * **Non-blocking.** `UI_Update()` returns after a few milliseconds and never waits for a touch, because in the team project the USB code (`Storage_Tasks()`) must run in every pass of the main loop.
-* **Fast graph.** `PutPixel()` reads and rewrites display memory for every pixel. The SH1101A stores 8 vertical pixels in one byte, so `UIDraw_Bar()` writes whole bytes: a full graph is 1952 bytes.
-* **Redraw only changes.** A copy of the 8 text rows is kept; `Text_PrintLine()` runs only for a row whose text changed.
-* **Touch filter.** A counter per pad must reach 3 loop passes to count as a touch and fall back to 0 to count as released.
+* **Simple drawing.** Bars are drawn pixel by pixel with the professor's `PutPixel()`. A full graph has at most 24 × 4 × 46 = 4416 pixels, which is fast enough.
+* **Redraw only when needed.** Drawing one text line takes several milliseconds, so the screen is drawn again only after a touch or, on the live screen, once per second.
+* **Touch counting.** A counter per pad counts the passes in a row in which the pad is touched; the pad counts as pressed when the counter reaches 3.
 * **Idle time from the clock.** The 30 s timeout uses `Clock_Now()`, so it does not depend on the length of a loop pass.
 
 ## Interfaces used by the user interface
@@ -123,7 +123,7 @@ No other folder or branch is needed. Moving the user interface into the team pro
 
 ## Testing
 
-* **PC (optional, needs gcc):** `sh display_data_by_day/test/run_daydata_test.sh` (hour averaging) and `sh display_data_by_day/test/run_tests.sh` (all screens against a simulated OLED, touch filter, timeout, LED, clock setting).
+* **PC (optional, needs gcc):** `sh display_data_by_day/test/run_daydata_test.sh` tests the hour averaging.
 * **Board:** each step tested on the board before its commit; notes in `docs/NOTES.md`.
 
 ## Hardware and memory
